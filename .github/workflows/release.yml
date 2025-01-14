@@ -17,7 +17,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '16.latest
+          node-version: '16.latest'
 
       - name: Clone private repository
         env:
@@ -33,8 +33,8 @@ jobs:
       - name: Get version
         id: get-version
         run: |
-          version=`echo ${{ github.ref_name }} | sed -r 's/[v]+//g'`
-          echo ::set-output name=VERSION::$version
+          version=$(echo "${{ github.ref_name }}" | sed 's/^v//')
+          echo "VERSION=$version" >> $GITHUB_ENV
 
       - name: Clear Unused files
         run: |
@@ -43,11 +43,12 @@ jobs:
       - name: Zip resources
         uses: vimtor/action-zip@v1
         with:
-            files: ./
-            dest: external-resources-${{ steps.get-version.outputs.VERSION }}.zip
+          files: ./
+          dest: external-resources-${{ env.VERSION }}.zip
 
       - name: Checksum
-        run: sha256sum external-resources-*.zip >> ${{ steps.get-version.outputs.VERSION }}-checksums-sha256.txt
+        run: |
+          sha256sum external-resources-*.zip >> ${{ env.VERSION }}-checksums-sha256.txt
 
       - name: Create Release
         id: create_release
@@ -75,18 +76,18 @@ jobs:
       - name: Upload Zip
         uses: xresloader/upload-to-github-release@v1
         env:
-            REPO_AUTH_TOKEN: ${{ secrets.REPO_AUTH_TOKEN }}
+          REPO_AUTH_TOKEN: ${{ secrets.REPO_AUTH_TOKEN }}
         with:
-            file: "external-resources-*.zip"
-            release_id: ${{steps.create_release.outputs.id}}
+          file: "external-resources-*.zip"
+          release_id: ${{ steps.create_release.outputs.id }}
 
       - name: Upload Checksum
         uses: xresloader/upload-to-github-release@v1
         env:
-            REPO_AUTH_TOKEN: ${{ secrets.REPO_AUTH_TOKEN }}
+          REPO_AUTH_TOKEN: ${{ secrets.REPO_AUTH_TOKEN }}
         with:
-            file: "*-checksums-sha256.txt"
-            release_id: ${{steps.create_release.outputs.id}}
+          file: "*-checksums-sha256.txt"
+          release_id: ${{ steps.create_release.outputs.id }}
 
   build-windows:
     needs: create-release
@@ -97,19 +98,20 @@ jobs:
       - name: Install Inno Setup
         shell: powershell
         run: |
-            choco install innosetup
+          choco install innosetup
 
       - name: Get version
         id: get-version
+        shell: powershell
         run: |
           $tag = "${{ github.ref_name }}"
           $version = $tag.Substring(1)
-          Write-Output "::set-output name=VERSION::$version"
+          Write-Output "VERSION=$version" >> $env:GITHUB_ENV
 
       - name: Build Installer
         shell: powershell
         run: |
-            & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /dVersion="${{ steps.get-version.outputs.VERSION }}" "./buildResources/setup.iss"
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /dVersion="${{ env.VERSION }}" "./buildResources/setup.iss"
 
       - name: Upload to Release
         uses: xresloader/upload-to-github-release@v1
@@ -117,7 +119,7 @@ jobs:
           REPO_AUTH_TOKEN: ${{ secrets.REPO_AUTH_TOKEN }}
         with:
           file: "./dist/IrcBloq-External-Resources*"
-          release_id: ${{needs.create-release.outputs.id}}
+          release_id: ${{ needs.create-release.outputs.id }}
 
   build-mac:
     needs: create-release
@@ -128,11 +130,11 @@ jobs:
       - name: Get version
         id: get-version
         run: |
-          version=`echo ${{ github.ref_name }} | sed -r 's/[v]+//g'`
-          echo ::set-output name=VERSION::$version
+          version=$(echo "${{ github.ref_name }}" | sed 's/^v//')
+          echo "VERSION=$version" >> $GITHUB_ENV
 
       - name: Build Installer
-        run: ./buildResources/build-pkg.sh VERSION="${{ steps.get-version.outputs.VERSION }}"
+        run: ./buildResources/build-pkg.sh VERSION="${{ env.VERSION }}"
 
       - name: Upload to Release
         uses: xresloader/upload-to-github-release@v1
@@ -140,7 +142,7 @@ jobs:
           REPO_AUTH_TOKEN: ${{ secrets.REPO_AUTH_TOKEN }}
         with:
           file: "./dist/IrcBloq-External-Resources*"
-          release_id: ${{needs.create-release.outputs.id}}
+          release_id: ${{ needs.create-release.outputs.id }}
 
   build-linux:
     needs: create-release
@@ -151,11 +153,11 @@ jobs:
       - name: Get version
         id: get-version
         run: |
-          version=`echo ${{ github.ref_name }} | sed -r 's/[v]+//g'`
-          echo ::set-output name=VERSION::$version
+          version=$(echo "${{ github.ref_name }}" | sed 's/^v//')
+          echo "VERSION=$version" >> $GITHUB_ENV
 
       - name: Build Installer
-        run: ./buildResources/build-deb.sh -v"${{ steps.get-version.outputs.VERSION }}"
+        run: ./buildResources/build-deb.sh -v"${{ env.VERSION }}"
 
       - name: Upload to Release
         uses: xresloader/upload-to-github-release@v1
@@ -163,4 +165,4 @@ jobs:
           REPO_AUTH_TOKEN: ${{ secrets.REPO_AUTH_TOKEN }}
         with:
           file: "./dist/IrcBloq-External-Resources*"
-          release_id: ${{needs.create-release.outputs.id}}
+          release_id: ${{ needs.create-release.outputs.id }}
