@@ -17,9 +17,14 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
+          node-version: '16.latest
 
-      - run: npm i -g ircbloq-resource@latest
+      - name: Clone private repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git clone https://x-access-token:${GITHUB_TOKEN}@github.com/username/itcbloq-resource.git
+          cd itcbloq-resource
 
       - name: Pre-process resources
         run: |
