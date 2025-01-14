@@ -1,0 +1,8 @@
+Package: ircbloq-external-resources
+Version: 0.0.0
+Section: misc
+Priority: optional
+Architecture: all
+Maintainer: i-Robochakra <mail@irobochakra.com>
+Description: Provides external resources to ircbloq.
+Installed-Size: 0
