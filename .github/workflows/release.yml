@@ -20,8 +20,6 @@ jobs:
       - name: Set up Git configuration
         run: git config --global url."https://${{ secrets.REPO_AUTH_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
 
-      - name: Clone Repository
-
       - name: Clone private repository
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_AUTH_TOKEN }}
