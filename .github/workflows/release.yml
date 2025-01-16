@@ -8,14 +8,16 @@ on:
       - 'README.md'
 
 jobs:
-  publish:
+  create-release:
     runs-on: ubuntu-latest
+    outputs:
+      id: ${{ steps.create_release.outputs.id }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
-          node-version: '14.x'
+          node-version: '16.x'
 
       - name: Clone private repository
         env:
@@ -24,9 +26,8 @@ jobs:
           git clone https://x-access-token:${GITHUB_TOKEN}@github.com/ircbloqcc/ircbloq-resource.git
           cd ircbloq-resource
 
-      - name: Pro-process resources
+      - name: Pre-process resources
         run: |
-          opt-size
           gen-config --version=${{ github.ref_name }}
 
       - name: Get version
@@ -34,6 +35,10 @@ jobs:
         run: |
           version=`echo ${{ github.ref_name }} | sed -r 's/[v]+//g'`
           echo ::set-output name=VERSION::$version
+
+      - name: Clear Unused files
+        run: |
+          rm -r .git .github buildResources
 
       - name: Zip resources
         uses: vimtor/action-zip@v1
@@ -48,7 +53,7 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_AUTH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REPO_AUTH_TOKEN}}
         with:
           tag_name: ${{ github.ref_name }}
           release_name: IrcBloq External Resources ${{ github.ref_name }}
@@ -79,22 +84,95 @@ jobs:
           draft: true
           prerelease: false
 
-      # Upload zip
-      - uses: actions/upload-release-asset@v1
+      - name: Upload Zip
+        uses: xresloader/upload-to-github-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_AUTH_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.REPO_AUTH_TOKEN}}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: external-resources-${{ steps.get-version.outputs.VERSION }}.zip
-          asset_name: external-resources-${{ steps.get-version.outputs.VERSION }}.zip
-          asset_content_type: application/zip
+            file: "external-resources-*.zip"
+            release_id: ${{steps.create_release.outputs.id}}
 
-      # Upload checksum
-      - uses: actions/upload-release-asset@v1
+      - name: Upload Checksum
+        uses: xresloader/upload-to-github-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_AUTH_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.REPO_AUTH_TOKEN}}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.get-version.outputs.VERSION }}-checksums-sha256.txt
-          asset_name: ${{ steps.get-version.outputs.VERSION }}-checksums-sha256.txt
-          asset_content_type: text/plain
+            file: "*-checksums-sha256.txt"
+            release_id: ${{steps.create_release.outputs.id}}
+
+  build-windows:
+    needs: create-release
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Inno Setup
+        shell: powershell
+        run: |
+            choco install innosetup
+
+      - name: Get version
+        id: get-version
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $version = $tag.Substring(1)
+          Write-Output "::set-output name=VERSION::$version"
+
+      - name: Build Installer
+        shell: powershell
+        run: |
+            & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /dVersion="${{ steps.get-version.outputs.VERSION }}" "./buildResources/setup.iss"
+
+      - name: Upload to Release
+        uses: xresloader/upload-to-github-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_AUTH_TOKEN}}
+        with:
+          file: "./dist/IrcBloq-External-Resources*"
+          release_id: ${{needs.create-release.outputs.id}}
+
+  build-mac:
+    needs: create-release
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version
+        id: get-version
+        run: |
+          version=`echo ${{ github.ref_name }} | sed -r 's/[v]+//g'`
+          echo ::set-output name=VERSION::$version
+
+      - name: Build Installer
+        run: ./buildResources/build-pkg.sh VERSION="${{ steps.get-version.outputs.VERSION }}"
+
+      - name: Upload to Release
+        uses: xresloader/upload-to-github-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_AUTH_TOKEN}}
+        with:
+          file: "./dist/IrcBloq-External-Resources*"
+          release_id: ${{needs.create-release.outputs.id}}
+
+  build-linux:
+    needs: create-release
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version
+        id: get-version
+        run: |
+          version=`echo ${{ github.ref_name }} | sed -r 's/[v]+//g'`
+          echo ::set-output name=VERSION::$version
+
+      - name: Build Installer
+        run: ./buildResources/build-deb.sh -v"${{ steps.get-version.outputs.VERSION }}"
+
+      - name: Upload to Release
+        uses: xresloader/upload-to-github-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_AUTH_TOKEN}}
+        with:
+          file: "./dist/IrcBloq-External-Resources*"
+          release_id: ${{needs.create-release.outputs.id}}
