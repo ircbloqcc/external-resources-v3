@@ -24,7 +24,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_AUTH_TOKEN }}
         run: |
-          git clone https://x-access-token:${GITHUB_TOKEN}@github.com/ircbloqcc/ircbloq-resource.git
+          git@github.com:ircbloqcc/ircbloq-resource.git
           cd ircbloq-resource
 
       - name: Pro-process resources
