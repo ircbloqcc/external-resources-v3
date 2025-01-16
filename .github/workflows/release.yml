@@ -28,6 +28,7 @@ jobs:
 
       - name: Pre-process resources
         run: |
+          cd ircbloq-resource
           gen-config --version=${{ github.ref_name }}
 
       - name: Get version
@@ -38,7 +39,7 @@ jobs:
 
       - name: Clear Unused files
         run: |
-          rm -r .git .github buildResources
+          rm -r .git .github buildResources ircbloq-resource
 
       - name: Zip resources
         uses: vimtor/action-zip@v1
