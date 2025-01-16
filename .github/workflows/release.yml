@@ -143,7 +143,7 @@ jobs:
           version=`echo ${{ github.ref_name }} | sed -r 's/[v]+//g'`
           echo ::set-output name=VERSION::$version
 
-      - name: Ensure build-deb.sh is executable
+      - name: Ensure build-pkg.sh is executable
         run: chmod +x ./buildResources/build-pkg.sh
 
       - name: Build Installer
@@ -171,6 +171,9 @@ jobs:
 
       - name: Ensure build-deb.sh is executable
         run: chmod +x ./buildResources/build-deb.sh
+
+      - name: Fix permissions of postinst script
+        run: chmod 755 ./buildResources/linux-scripts/postinst
 
       - name: Build Installer
         run: ./buildResources/build-deb.sh -v"${{ steps.get-version.outputs.VERSION }}"
