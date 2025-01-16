@@ -29,7 +29,7 @@ jobs:
       - name: Pre-process resources
         run: |
           cd ircbloq-resource
-          gen-config --version=${{ github.ref_name }}
+          node ./script/bin/gen-config.js --version=${{ github.ref_name }}
 
       - name: Get version
         id: get-version
