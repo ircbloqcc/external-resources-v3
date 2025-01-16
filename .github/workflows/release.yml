@@ -20,12 +20,17 @@ jobs:
       - name: Set up Git configuration
         run: git config --global url."https://${{ secrets.REPO_AUTH_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
 
-      - name: Clone private repository
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_AUTH_TOKEN }}
+      - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
+        uses: GuillaumeFalourd/clone-github-repo-action@v2.3
+        with:
+          owner: 'ircbloqcc'
+          repository: 'ircbloq-resource'
+          access-token: ${{ secrets.REPO_AUTH_TOKEN }}
+
+      - name: Access cloned repository content
         run: |
-          git@github.com:ircbloqcc/ircbloq-resource.git
           cd ircbloq-resource
+          ls -la
 
       - name: Pro-process resources
         run: |
