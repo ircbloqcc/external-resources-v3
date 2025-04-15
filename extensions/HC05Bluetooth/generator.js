@@ -1,7 +1,7 @@
 /* eslint-disable func-style */
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
-function registergenerators (Blockly) {
+function registerGenerators (Blockly) {
     Blockly.Arduino.HC05Bluetooth_begin = function (block) {
        // const no = Blockly.Arduino.valueToCode(block, 'no', Blockly.Arduino.ORDER_ATOMIC);
         const rx = this.getFieldValue('rx');
@@ -12,7 +12,7 @@ function registergenerators (Blockly) {
         Blockly.Arduino.definitions_[`HC05Bluetooth_begin`] = `SoftwareSerial HC05Bluetooth(${rx}, ${tx});`;
         return `HC05Bluetooth.begin(${baudrate});\n`;
     };
-	
+
 	Blockly.Arduino.HC05Bluetooth_timeout = function (block) {
        // const no = Blockly.Arduino.valueToCode(block, 'no', Blockly.Arduino.ORDER_ATOMIC);
         const tout = Blockly.Arduino.valueToCode(block, 'tout', Blockly.Arduino.ORDER_ATOMIC);
@@ -44,7 +44,7 @@ function registergenerators (Blockly) {
       //  const no = Blockly.Arduino.valueToCode(block, 'no', Blockly.Arduino.ORDER_ATOMIC);
         return [`HC05Bluetooth.parseInt()`, Blockly.Arduino.ORDER_ATOMIC];
     };
-    
+
     Blockly.Arduino.HC05Bluetooth_readString = function (block) {
       //  const no = Blockly.Arduino.valueToCode(block, 'no', Blockly.Arduino.ORDER_ATOMIC);
         return `String b_cmd;\nb_cmd=HC05Bluetooth.readString();\n`;
@@ -57,4 +57,4 @@ function registergenerators (Blockly) {
     return Blockly;
 }
 
-exports = registergenerators;
+exports = registerGenerators;
