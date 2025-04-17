@@ -7,7 +7,7 @@ const keypad = formatMessage => ({
     extensionId: "keypad",
     version: "1.1.0",
     supportDevice: ["arduinoUno", "arduinoNano", "arduinoMini", "arduinoLeonardo",
-        "arduinoMega2560", "arduinoEsp32", "arduinoEsp8266"],
+        "arduinoMega2560", "arduinoEsp32", "arduinoEsp8266NodeMCU"],
     author: "iRobochakra",
     iconURL: `assets/keypad.png`,
     description: formatMessage({

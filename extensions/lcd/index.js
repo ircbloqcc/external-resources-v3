@@ -6,7 +6,7 @@ const lcd = formatMessage => ({
     extensionId: 'lcd',
     version: '1.0.0',
     supportDevice: ['arduinoUno', 'arduinoNano', 'arduinoLeonardo',
-        'arduinoMega2560', 'arduinoEsp8266', 'arduinoEsp32'],
+        'arduinoMega2560', 'arduinoEsp8266NodeMCU', 'arduinoEsp32'],
     author: 'i-Robochakra Team',
     iconURL: `assets/lcd.png`,
     description: formatMessage({

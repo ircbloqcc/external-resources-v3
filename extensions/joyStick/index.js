@@ -7,7 +7,7 @@ const joyStick = formatMessage => ({
     extensionId: 'joyStick',
     version: '1.1.0',
     supportDevice: ['arduinoUno', 'arduinoNano', 'arduinoLeonardo',
-        'arduinoMega2560', 'arduinoEsp8266', 'arduinoEsp32'],
+        'arduinoMega2560', 'arduinoEsp8266NodeMCU', 'arduinoEsp32'],
     author: 'iRobochakra',
     iconURL: `assets/joyStick.png`,
     description: formatMessage({

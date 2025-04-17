@@ -6,7 +6,7 @@ const sharpIR = formatMessage => ({
     extensionId: 'sharpIR',
     version: '1.0.0',
     supportDevice: ['arduinoUno', 'arduinoNano', 'arduinoLeonardo',
-        'arduinoMega2560', 'arduinoEsp8266'],
+        'arduinoMega2560', 'arduinoEsp8266NodeMCU'],
     author: 'i-Robochakra Team',
     iconURL: `assets/sharpIR.png`,
     description: formatMessage({

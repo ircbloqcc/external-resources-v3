@@ -6,7 +6,7 @@ const ThingSpeak = formatMessage => ({
     }),
     extensionId: 'ThingSpeak',
     version: '1.0.1',
-    supportDevice: ['arduinoEsp8266','arduinoEsp32'],
+    supportDevice: ['arduinoEsp8266NodeMCU','arduinoEsp32'],
     author: 'iRobochakra',
     iconURL: `assets/ThingSpeak.png`,
     description: formatMessage({

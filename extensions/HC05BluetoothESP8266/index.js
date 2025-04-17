@@ -6,7 +6,7 @@ const HC05BluetoothEsp8266 = formatMessage => ({
     }),
     extensionId: 'HC05BluetoothEsp8266',
     version: '1.0.0',
-    supportDevice: 'arduinoEsp8266',
+    supportDevice: 'arduinoEsp8266NodeMCU',
     author: 'iRobochakra',
     iconURL: `assets/HC05BluetoothEsp8266.png`,
     description: formatMessage({

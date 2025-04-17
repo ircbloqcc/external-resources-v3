@@ -6,7 +6,7 @@ const Blynk = formatMessage => ({
     }),
     extensionId: 'Blynk',
     version: '2.2.0',
-    supportDevice: ['arduinoEsp8266','arduinoEsp32'],
+    supportDevice: ['arduinoEsp8266NodeMCU','arduinoEsp32'],
     author: 'iRobochakra',
     iconURL: `assets/Blynk.png`,
     description: formatMessage({

@@ -6,7 +6,7 @@ const dht = formatMessage => ({
     extensionId: 'dht',
     version: '1.0.0',
     supportDevice: ['arduinoUno', 'arduinoNano', 'arduinoLeonardo',
-        'arduinoMega2560', 'arduinoEsp32', 'arduinoEsp8266'],
+        'arduinoMega2560', 'arduinoEsp32', 'arduinoEsp8266NodeMCU'],
     author: 'i-Robochakra Team',
     iconURL: `assets/dht.png`,
     description: formatMessage({

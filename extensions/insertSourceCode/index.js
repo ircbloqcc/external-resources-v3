@@ -6,7 +6,7 @@ const insertSourceCode = formatMessage => ({
     extensionId: 'insertSourceCode',
     version: '1.0.0',
     supportDevice: ['arduinoUno', 'arduinoNano', 'arduinoLeonardo',
-        'arduinoMega2560', 'arduinoEsp32', 'arduinoEsp8266'],
+        'arduinoMega2560', 'arduinoEsp32', 'arduinoEsp8266NodeMCU'],
     author: 'i-Robochakra Team',
     iconURL: `assets/insertSourceCode.png`,
     description: formatMessage({
