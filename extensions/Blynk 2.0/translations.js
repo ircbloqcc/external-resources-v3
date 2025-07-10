@@ -35,7 +35,7 @@ function registerBlocksMessages (Blockly) {
         {
           "BLYNK_CATEGORY": "BLYNK 2.0",
           "BLYNK_BEGIN": "Initialize BLYNK Server with %1 baudrate",
-          "BLYNK_TEMPLATEID": "Blynk Template ID %1 Device Name %2",
+          "BLYNK_TEMPLATEID": "Blynk Template ID %1 Template Name %2",
           "BLYNK_USERID": "Connect SSID %1 Password %2 Auth Token %3 for Blynk",
           "BLYNK_START": "Start Blynk Server",
           "BLYNK_RECEIVE": "Receive %1 data in virtual pin %2 from Blynk",
@@ -49,7 +49,7 @@ function registerBlocksMessages (Blockly) {
         {
           "BLYNK_CATEGORY": "BLYNK 2.0",
           "BLYNK_BEGIN": "Initialize BLYNK Server with %1 baudrate",
-          "BLYNK_TEMPLATEID": "Blynk Template ID %1 Device Name %2",
+          "BLYNK_TEMPLATEID": "Blynk Template ID %1 Template Name %2",
           "BLYNK_USERID": "Connect SSID %1 Password %2 Auth Token %3 for Blynk",
           "BLYNK_START": "Start Blynk Server",
           "BLYNK_RECEIVE": "Receive %1 data in virtual pin %2 from Blynk",
@@ -63,7 +63,7 @@ function registerBlocksMessages (Blockly) {
         {
           "BLYNK_CATEGORY": "BLYNK 2.0",
           "BLYNK_BEGIN": "Initialize BLYNK Server with %1 baudrate",
-          "BLYNK_TEMPLATEID": "Blynk Template ID %1 Device Name %2",
+          "BLYNK_TEMPLATEID": "Blynk Template ID %1 Template Name %2",
           "BLYNK_USERID": "Connect SSID %1 Password %2 Auth Token %3 for Blynk",
           "BLYNK_START": "Start Blynk Server",
           "BLYNK_RECEIVE": "Receive %1 data in virtual pin %2 from Blynk",
@@ -77,7 +77,7 @@ function registerBlocksMessages (Blockly) {
         {
           "BLYNK_CATEGORY": "BLYNK 2.0",
           "BLYNK_BEGIN": "Initialize BLYNK Server with %1 baudrate",
-          "BLYNK_TEMPLATEID": "Blynk Template ID %1 Device Name %2",
+          "BLYNK_TEMPLATEID": "Blynk Template ID %1 Template Name %2",
           "BLYNK_USERID": "Connect SSID %1 Password %2 Auth Token %3 for Blynk",
           "BLYNK_START": "Start Blynk Server",
           "BLYNK_RECEIVE": "Receive %1 data in virtual pin %2 from Blynk",

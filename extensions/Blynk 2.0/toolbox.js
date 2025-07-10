@@ -10,9 +10,9 @@ function registerToolboxs () {
                 <field name="TEXT">Template ID</field>
             </shadow>
         </value>
-        <value name="blynkdname">
+        <value name="blynktempname">
             <shadow type="text">
-                <field name="TEXT">Device Name</field>
+                <field name="TEXT">Template Name</field>
             </shadow>
         </value>
     </block>

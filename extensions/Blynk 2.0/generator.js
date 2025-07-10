@@ -15,10 +15,10 @@ function registerGenerators (Blockly) {
 	Blockly.Arduino.Blynk_templateid = function (block) {
       // const no = Blockly.Arduino.valueToCode(block, 'no', Blockly.Arduino.ORDER_ATOMIC);
        const blynktempid = Blockly.Arduino.valueToCode(block, 'blynktempid', Blockly.Arduino.ORDER_ATOMIC);
-       const blynkdname = Blockly.Arduino.valueToCode(block, 'blynkdname', Blockly.Arduino.ORDER_ATOMIC);
+       const blynktempname = Blockly.Arduino.valueToCode(block, 'blynktempname', Blockly.Arduino.ORDER_ATOMIC);
        Blockly.Arduino.includes_.Blynk_templateid = `
 #define BLYNK_TEMPLATE_ID ${blynktempid}
-#define BLYNK_DEVICE_NAME ${blynkdname}`;
+#define BLYNK_TEMPLATE_NAME ${blynktempname}`;
       return '';
    };
 

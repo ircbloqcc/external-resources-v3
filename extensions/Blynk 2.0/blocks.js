@@ -36,7 +36,7 @@ function registerBlocks (Blockly) {
                 },
                 {
                     type: 'input_value',
-                    name: 'blynkdname'
+                    name: 'blynktempname'
                 }],
                 colour: color,
                 extensions: ['shape_statement']
